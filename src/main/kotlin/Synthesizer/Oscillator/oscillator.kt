@@ -1,17 +1,14 @@
 package synthesizer
 
+import Waveform
+
 import kotlin.math.sin
 
-class Oscillator(private val sampleRate: Int, private val waveform: Waveform) {
+class Oscillator(private val sampleRate: Int, private val waveform: Waveform, frequency: Double) {
     private var phase: Double = 0.0
-    private val phaseIncrement: Double = frequencyToPhaseIncrement(440.0)
+    private val phaseIncrement: Double = frequencyToPhaseIncrement(frequency)
 
-    enum class Waveform {
-        SINE,
-        SAWTOOTH,
-        SQUARE,
-        TRIANGLE
-    }
+
 
     fun getSample(): Double {
         val value: Double = when (waveform) {

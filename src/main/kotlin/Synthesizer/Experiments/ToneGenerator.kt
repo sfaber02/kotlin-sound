@@ -1,23 +1,24 @@
 package synthesizer
 
 import sampleRate
+import Waveform
 
 
 class ToneGenerator() {
-    private val synthesizer = Synthesizer(sampleRate)
+
 
     public fun generateTone (
         duration: Double,
         frequency: Double): ByteArray {
-        val buffer = ByteArray((duration * sampleRate).toInt())
+
+        val oscillator: Oscillator = Oscillator(sampleRate, Waveform.SINE, frequency)
+        val buffer = ByteArray((duration * sampleRate).toInt() * 2)
 
         for (i in buffer.indices step 2) {
-            val rawSample: Double = synthesizer.getSample()
-            println ("raw sample = $rawSample")
-            val sample: Int = (rawSample * 1500).toInt()
-            println("sample = $sample byte=${sample.toByte()}")
-            buffer[i] = sample.toByte()
-            buffer[i + 1] = (sample shr 8).toByte()
+            val rawSample: Double = oscillator.getSample()
+            val sample: Int = (rawSample * 1000).toInt()
+            buffer[i] = (sample shr 8).toByte()
+            buffer[i + 1] = sample.toByte()
         }
 
         return buffer
