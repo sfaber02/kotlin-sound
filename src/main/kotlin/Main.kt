@@ -32,17 +32,32 @@ fun main() {
     audioOut.open(audioFormat)
     audioOut.start()
 
-    val tone1: ByteArray = toneGenerator.generateTone(0.25, 200.0)
-    val tone2: ByteArray = toneGenerator.generateTone(0.5, 440.0)
+    val g3: ByteArray = toneGenerator.generateTone(0.5, 49.0, 2000, Waveform.SINE)
+    val b2: ByteArray = toneGenerator.generateTone(0.25, 123.47, 1000, Waveform.SINE)
+    val d4: ByteArray = toneGenerator.generateTone(0.25, 293.66, 700, Waveform.SINE)
 
-    for (i in 0..100) {
-        if (i % 2 == 0) {
-            println(i)
-            audioOut.write(tone1, 0, tone1.size)
-        } else  {
-            audioOut.write(tone2, 0, tone2.size)
+
+    val numBeats: Int = 4
+    val measures: Int = 16
+    var measure: Int = 1
+    var beat:Int = 1
+
+    while(measure <= measures) {
+        println ("$beat/$measure")
+        if (beat > numBeats) {
+            beat = 1
+            measure += 1
         }
+
+        when (beat) {
+            1, 2 -> audioOut.write(g3, 0, g3.size)
+            3 -> audioOut.write(b2, 0, b2.size)
+            else -> audioOut.write(d4, 0, d4.size)
+        }
+
+
         audioOut.drain()
+        beat += 1
     }
 
     audioOut.stop()
