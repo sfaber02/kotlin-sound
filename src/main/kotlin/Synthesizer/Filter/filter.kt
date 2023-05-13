@@ -1,4 +1,4 @@
-package Synthesizer
+package synthesizer
 
 class Filter(private val sampleRate: Int) {
     private var cutoffFrequency = 1000.0

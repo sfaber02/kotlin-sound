@@ -1,4 +1,4 @@
-package Synthesizer
+package synthesizer
 
 import kotlin.math.sin
 

@@ -1,8 +1,8 @@
-package Synthesizer
+package synthesizer
 
-import Synthesizer.Oscillator
-import Synthesizer.EnvelopeGenerator
-import Synthesizer.Filter
+import synthesizer.Oscillator
+import synthesizer.EnvelopeGenerator
+import synthesizer.Filter
 
 class Synthesizer(private val sampleRate: Int) {
     private val oscillator = Oscillator(sampleRate, Oscillator.Waveform.SINE)

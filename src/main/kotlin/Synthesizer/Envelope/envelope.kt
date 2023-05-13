@@ -1,4 +1,4 @@
-package Synthesizer
+package synthesizer
 
 class EnvelopeGenerator(private val sampleRate: Int) {
     private var attackTime = 0.1
