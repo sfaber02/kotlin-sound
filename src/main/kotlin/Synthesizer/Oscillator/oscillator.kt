@@ -3,8 +3,8 @@ package Synthesizer
 import kotlin.math.sin
 
 class Oscillator(private val sampleRate: Int, private val waveform: Waveform) {
-    private var phase = 0.0
-    private val phaseIncrement = frequencyToPhaseIncrement(440.0)
+    private var phase: Double = 0.0
+    private val phaseIncrement: Double = frequencyToPhaseIncrement(440.0)
 
     enum class Waveform {
         SINE,

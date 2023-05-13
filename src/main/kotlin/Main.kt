@@ -51,9 +51,9 @@ fun main() {
     line.drain()
     line.stop()
 
-    line.write(buffer2, 0, buffer2.size)
-    line.drain()
-    line.stop()
+//    line.write(buffer2, 0, buffer2.size)
+//    line.drain()
+//    line.stop()
 
     line.close()
 }
