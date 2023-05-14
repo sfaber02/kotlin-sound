@@ -1,9 +1,9 @@
 package synthesizer
 
 class EnvelopeGenerator(private val sampleRate: Int) {
-    private var attackTime = 0.1
-    private var decayTime = 0.1
-    private var sustainLevel = 0.9
+    private var attackTime = 10.0
+    private var decayTime = 10.0
+    private var sustainLevel = 10.0
     private var releaseTime = 0.5
     private var state = State.IDLE
     private var phase = 0.0

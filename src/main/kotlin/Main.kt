@@ -26,48 +26,56 @@ fun main() {
     println ("Kotlin Synth v0.1")
 
     val audioOut = AudioLine().getLine()
-    val audioOut2 = AudioLine().getLine()
 
     val toneGenerator: ToneGenerator = ToneGenerator()
 
     audioOut.open(audioFormat)
     audioOut.start()
-    audioOut2.open(audioFormat)
-    audioOut2.start()
 
-    val g3: ByteArray = toneGenerator.generateTone(0.4, 49.0, 5000, Waveform.SINE)
-    val b2: ByteArray = toneGenerator.generateTone(0.25, 123.47, 1000, Waveform.SINE)
-    val d4: ByteArray = toneGenerator.generateTone(0.25, 293.66, 700, Waveform.SINE)
-    val high: ByteArray = toneGenerator.generateTone(0.05, 10000.00, 200, Waveform.SINE)
+//    val g3: ByteArray = toneGenerator.generateTone(0.4, 49.0, 5000, Waveform.SINE)
+//    val b2: ByteArray = toneGenerator.generateTone(0.25, 123.47, 1000, Waveform.SINE)
+//    val d4: ByteArray = toneGenerator.generateTone(0.25, 293.66, 700, Waveform.SINE)
+//    val high: ByteArray = toneGenerator.generateTone(0.05, 10000.00, 200, Waveform.SINE)
+//
+//    //AD HOC SEQUENCER
+//
+//    val numBeats: Int = 5
+//    val measures: Int = 20
+//    var measure: Int = 1
+//    var beat:Int = 1
+//
+//    while(measure <= measures) {
+//        println ("$beat/$measure")
+//        if (beat > numBeats) {
+//            beat = 1
+//            measure += 1
+//        }
+//
+//        when (beat) {
+//            1, 2 -> audioOut.write(g3, 0, g3.size)
+//            3 -> audioOut.write(b2, 0, b2.size)
+//            4 -> audioOut.write(high, 0, high.size)
+//            else -> audioOut.write(d4, 0, d4.size)
+//        }
+//
+//
+//        audioOut.drain()
+//        beat += 1
+//    }
 
-    //AD HOC SEQUENCER
+    val intervalGenerator: IntervalGenerator = IntervalGenerator()
 
-    val numBeats: Int = 5
-    val measures: Int = 20
-    var measure: Int = 1
-    var beat:Int = 1
+    // a minor triad
+    val someInterval: ByteArray = intervalGenerator.generateInterval(
+        30.0,
+        110.0,
+        261.63,
+        629.25,
+        1000,
+        Waveform.SINE)
 
-    while(measure <= measures) {
-        println ("$beat/$measure")
-        if (beat > numBeats) {
-            beat = 1
-            measure += 1
-        }
-
-        when (beat) {
-            1, 2 -> audioOut.write(g3, 0, g3.size)
-            3 -> audioOut.write(b2, 0, b2.size)
-            4 -> audioOut.write(high, 0, high.size)
-            else -> audioOut.write(d4, 0, d4.size)
-        }
-
-
-        audioOut.drain()
-        beat += 1
-    }
-
-
-
+    audioOut.write(someInterval, 0, someInterval.size)
+    audioOut.flush()
 
     audioOut.stop()
     audioOut.close()
