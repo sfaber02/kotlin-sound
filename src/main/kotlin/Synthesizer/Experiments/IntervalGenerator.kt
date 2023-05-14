@@ -19,6 +19,8 @@ class IntervalGenerator() {
         val envelopeGenerator: EnvelopeGenerator = EnvelopeGenerator(44100)
         envelopeGenerator.noteOn()
 
+        val filter: Filter = Filter(sampleRate)
+
 
         val buffer = ByteArray((duration * sampleRate).toInt() * 2)
 
