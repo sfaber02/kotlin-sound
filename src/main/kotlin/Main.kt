@@ -1,9 +1,13 @@
 import synthesizer.ToneGenerator
 import synthesizer.EnvelopeGenerator
+import kotlinx.coroutines.*
 
 import audio.AudioFilePlayer
 
 import audio.AudioLine
+import frontend.Frontend
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import synthesizer.IntervalGenerator
 import javax.sound.sampled.*
 
@@ -22,9 +26,23 @@ public enum class Waveform {
     SQUARE,
     TRIANGLE
 }
-fun main() {
+suspend fun main () = coroutineScope {
     println ("Kotlin Synth v0.1")
 
+    launch {
+        val frontend: Frontend = Frontend()
+        frontend.buildUI()
+    }
+    println("*****PASSED LAUNCHING THE FRONTEND*****")
+
+    launch {
+        play()
+    }
+    println("*****PASSED LAUNCHING THE PLAY*****")
+
+}
+
+suspend fun play() = coroutineScope {
     val audioOut = AudioLine().getLine()
 
     val toneGenerator: ToneGenerator = ToneGenerator()
@@ -45,7 +63,6 @@ fun main() {
     var beat:Int = 1
 
     while(measure <= measures) {
-        println ("$beat/$measure")
         if (beat > numBeats) {
             beat = 1
             measure += 1
@@ -80,8 +97,6 @@ fun main() {
     audioOut.stop()
     audioOut.close()
 }
-
-
 
 
 //Play an audio file
