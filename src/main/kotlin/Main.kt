@@ -1,8 +1,10 @@
 import synthesizer.ToneGenerator
+import synthesizer.EnvelopeGenerator
 
 import audio.AudioFilePlayer
 
 import audio.AudioLine
+import synthesizer.IntervalGenerator
 import javax.sound.sampled.*
 
 public const val sampleRate: Int = 44100
@@ -24,21 +26,24 @@ fun main() {
     println ("Kotlin Synth v0.1")
 
     val audioOut = AudioLine().getLine()
-    val toneGenerator: ToneGenerator = ToneGenerator()
+    val audioOut2 = AudioLine().getLine()
 
-//    val player: AudioFilePlayer = AudioFilePlayer()
-//    player.play()
+    val toneGenerator: ToneGenerator = ToneGenerator()
 
     audioOut.open(audioFormat)
     audioOut.start()
+    audioOut2.open(audioFormat)
+    audioOut2.start()
 
-    val g3: ByteArray = toneGenerator.generateTone(0.5, 49.0, 2000, Waveform.SINE)
+    val g3: ByteArray = toneGenerator.generateTone(0.4, 49.0, 5000, Waveform.SINE)
     val b2: ByteArray = toneGenerator.generateTone(0.25, 123.47, 1000, Waveform.SINE)
     val d4: ByteArray = toneGenerator.generateTone(0.25, 293.66, 700, Waveform.SINE)
+    val high: ByteArray = toneGenerator.generateTone(0.05, 10000.00, 200, Waveform.SINE)
 
+    //AD HOC SEQUENCER
 
-    val numBeats: Int = 4
-    val measures: Int = 16
+    val numBeats: Int = 5
+    val measures: Int = 20
     var measure: Int = 1
     var beat:Int = 1
 
@@ -52,6 +57,7 @@ fun main() {
         when (beat) {
             1, 2 -> audioOut.write(g3, 0, g3.size)
             3 -> audioOut.write(b2, 0, b2.size)
+            4 -> audioOut.write(high, 0, high.size)
             else -> audioOut.write(d4, 0, d4.size)
         }
 
@@ -60,6 +66,34 @@ fun main() {
         beat += 1
     }
 
+
+
+
     audioOut.stop()
     audioOut.close()
 }
+
+
+
+//ATTEMPTING TO PLAY MULTIPLE SOUNDS AT ONCE
+
+//    val intervalGenerator: IntervalGenerator = IntervalGenerator()
+//    val someInterval: ByteArray = IntervalGenerator().generateInterval(10.0, 4000.0, 440.0, 5000, Waveform.SINE)
+//
+//    audioOut.write(someInterval, 0, someInterval.size)
+//
+//    audioOut.drain()
+//    audioOut.write(g3, 0, g3.size)
+//    audioOut2.write(b2, 0, b2.size)
+
+//    audioOut.flush()
+//    audioOut2.flush()
+
+
+
+//Play an audio file
+//    val player: AudioFilePlayer = AudioFilePlayer()
+//    player.play()
+//    val longAForTest: ByteArray = toneGenerator.generateTone(60.0, 440.0, 1000, Waveform.SINE)
+//    audioOut.write(longAForTest, 0, longAForTest.size)
+//    audioOut.drain()

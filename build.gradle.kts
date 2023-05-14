@@ -13,11 +13,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
+//    testImplementation(kotlin("test"))
+    implementation("com.googlecode.lanterna:lanterna:3.1.1")
 }
 
 tasks.withType<KotlinCompile> {

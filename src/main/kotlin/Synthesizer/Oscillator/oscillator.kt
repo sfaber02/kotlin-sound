@@ -34,7 +34,6 @@ class Oscillator(private val sampleRate: Int, private val waveform: Waveform, fr
         if (phase >= 2 * Math.PI) {
             phase -= 2 * Math.PI
         }
-//        println(value)
         return value
     }
 

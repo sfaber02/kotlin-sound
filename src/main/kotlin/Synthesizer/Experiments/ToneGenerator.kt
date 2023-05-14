@@ -14,6 +14,9 @@ class ToneGenerator() {
         waveform: Waveform): ByteArray {
 
         val oscillator: Oscillator = Oscillator(sampleRate, waveform, frequency)
+        val envelopeGenerator: EnvelopeGenerator = EnvelopeGenerator(44100)
+
+        envelopeGenerator.noteOn()
 
 
         // 16 bit sound, bytes are only 8 bits so each sample will need to be serialized
@@ -24,12 +27,14 @@ class ToneGenerator() {
 
         for (i in buffer.indices step 2) {
             val rawSample: Double = oscillator.getSample()
-            val sample: Int = (rawSample * amplitude).toInt()
+            val envelopeSample: Double = envelopeGenerator.getSample()
+
+            val finalSample: Int = (rawSample * envelopeSample * amplitude).toInt()
 
             // shr 8 shifts the sample 8 bits to the right and records the
             // more significant 8 bits first (Big Endian)
-            buffer[i] = (sample shr 8).toByte()
-            buffer[i + 1] = sample.toByte()
+            buffer[i] = (finalSample shr 8).toByte()
+            buffer[i + 1] = finalSample.toByte()
         }
 
         return buffer
