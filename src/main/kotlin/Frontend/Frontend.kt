@@ -22,7 +22,7 @@ class Frontend() {
     var mainWindow: Window = BasicWindow("main")
     var contentPanel: Panel = Panel(GridLayout(2))
     var gridLayout = contentPanel.layoutManager as GridLayout
-    var title = Label("This is a label that spans two columns")
+
 
     var rows: Int = screen.terminalSize.rows
     var cols: Int = screen.terminalSize.columns
@@ -34,6 +34,7 @@ class Frontend() {
         screen.cursorPosition = null
         gridLayout.horizontalSpacing = 3
 
+        var title = Label("This is a label that spans two columns")
         title.setLayoutData(GridLayout.createLayoutData(
             GridLayout.Alignment.BEGINNING, // Horizontal alignment in the grid cell if the cell is larger than the component's preferred size
             GridLayout.Alignment.BEGINNING, // Vertical alignment in the grid cell if the cell is larger than the component's preferred size
@@ -97,6 +98,9 @@ class Frontend() {
              */
         mainWindow.setComponent(contentPanel);
 
+        val oscillatorPanel: Component = makeOscillatorUI()
+        mainWindow.setComponent(oscillatorPanel)
+
 
         /*
    Now the window is created and fully populated. As discussed above regarding the threading model, we have the
@@ -109,11 +113,8 @@ class Frontend() {
    "Close" button above, we tied a call to the close() method on the Window object when the button is
    triggered, this will then break the even loop and our call finally returns.
     */
+        gui.addWindowAndWait(mainWindow);
 
-        launch {
-
-            addWindow(mainWindow)
-        }
 
 
         println ("passed add window")
@@ -129,9 +130,5 @@ class Frontend() {
                 throw RuntimeException(e)
             }
         }
-    }
-
-    private suspend fun addWindow(mainWindow: Window) = coroutineScope {
-        gui.addWindowAndWait(mainWindow);
     }
 }
