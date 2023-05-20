@@ -38,6 +38,7 @@ suspend fun main () = coroutineScope {
     launch {
         play()
     }
+
     println("*****PASSED LAUNCHING THE PLAY*****")
 
 }
@@ -92,6 +93,11 @@ suspend fun play() = coroutineScope {
         Waveform.SINE)
 
     audioOut.write(someInterval, 0, someInterval.size)
+
+//        val testTone: ByteArray = toneGenerator.generateToneWithOffset(5.0, 49.0, 5000, Waveform.SINE)
+
+//    audioOut.write(testTone, 0, testTone.size)
+
     audioOut.flush()
 
     audioOut.stop()
