@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
     application
+    kotlin("jvm") version "1.8.21"
 }
 
 group = "org.example"
@@ -28,7 +28,7 @@ dependencies {
 
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
 
 // tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {

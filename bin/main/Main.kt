@@ -17,7 +17,7 @@ public enum class Waveform {
     TRIANGLE
 }
 
-suspend fun main() = coroutineScope {
+suspend fun main(): Unit = coroutineScope {
     println("Kotlin Synth v0.1")
 
     launch {
