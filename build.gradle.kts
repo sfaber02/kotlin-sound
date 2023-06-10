@@ -21,12 +21,21 @@ dependencies {
     //gui
     implementation("com.googlecode.lanterna:lanterna:3.1.1")
 
+    //lint
+    implementation("com.pinterest.ktlint:ktlint-core:0.49.1")
+
 }
 
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+// tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+//     kotlinOptions {
+//         jvmTarget = "17"
+//     }
+// }
 
 application {
     mainClass.set("MainKt")
