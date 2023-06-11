@@ -1,6 +1,7 @@
 /build
 /.gradle
 /.idea
+.gradle
 .DS_Store
 
 /src/main/kotlin/Synthesizer/Envelope/22022.wav
