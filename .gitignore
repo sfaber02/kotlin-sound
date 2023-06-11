@@ -1,15 +1,8 @@
 /build
-/.gradle
+/.gradle/
 /.idea
-.gradle
+.gradle/
 .DS_Store
 
 /src/main/kotlin/Synthesizer/Envelope/22022.wav
-.gradle/file-system.probe
-.gradle/7.4.2/executionHistory/executionHistory.bin
-.gradle/7.4.2/executionHistory/executionHistory.lock
-.gradle/7.4.2/fileHashes/fileHashes.bin
-.gradle/7.4.2/fileHashes/fileHashes.lock
-.gradle/7.4.2/fileHashes/resourceHashesCache.bin
-.gradle/buildOutputCleanup/buildOutputCleanup.lock
-.gradle/buildOutputCleanup/outputFiles.bin
+
