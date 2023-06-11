@@ -1,16 +1,11 @@
 package audio
 
-
-
+import java.io.File
 import javax.sound.sampled.*
 
+class AudioFilePlayer {
 
-import javax.sound.sampled.Clip
-import java.io.File
-
-class AudioFilePlayer () {
-
-    val audioFile = File("/Users/shawn/dev/synth-test/src/main/kotlin/Synthesizer/Experiments/22022.wav")
+    private val audioFile = File("/Users/shawn/dev/synth-test/src/main/kotlin/Synthesizer/Experiments/22022.wav")
 
     public fun play() {
         if (!audioFile.exists()) {
@@ -35,8 +30,4 @@ class AudioFilePlayer () {
 
         clip.close()
     }
-
-
-
-
 }

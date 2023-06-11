@@ -1,6 +1,3 @@
 package sequencer
 
-
-class Sequencer () {
-
-}
+class Sequencer

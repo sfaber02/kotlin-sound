@@ -1,14 +1,14 @@
 package synthesizer
 
-import Waveform
-
 import kotlin.math.sin
 
-class ExperimentalOscillator(private val sampleRate: Int, private val waveform: Waveform, frequency: Double, private var offset: Double) {
+class ExperimentalOscillator(private val sampleRate: Int,
+                             private val waveform: Waveform,
+                             frequency: Double,
+                             private var offset: Double)
+{
     private var phase: Double = 0.0
     private val phaseIncrement: Double = frequencyToPhaseIncrement(frequency)
-
-
 
     fun getSample(): Double {
         val value: Double = when (waveform) {
@@ -38,7 +38,7 @@ class ExperimentalOscillator(private val sampleRate: Int, private val waveform: 
 //        offset += offset
 //        println ("value = $value, offset = $offset")
         println(value)
-        return value //+ offset
+        return value // + offset
     }
 
     private fun frequencyToPhaseIncrement(frequency: Double): Double {

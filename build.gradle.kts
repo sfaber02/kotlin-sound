@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     kotlin("jvm") version "1.8.21"
+
+    // lint
+//    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
 }
 
 group = "org.example"
@@ -15,17 +18,15 @@ repositories {
 dependencies {
 //    testImplementation(kotlin("test"))
 
-    //kotlin co routines
+    // kotlin co routines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
-    //gui
+    // gui
     implementation("com.googlecode.lanterna:lanterna:3.1.1")
 
-    //lint
-    implementation("com.pinterest.ktlint:ktlint-core:0.49.1")
-
+    // lint
+//    implementation("com.pinterest.ktlint:ktlint-core:0.49.1")
 }
-
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "17"

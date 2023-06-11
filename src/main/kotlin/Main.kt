@@ -1,21 +1,16 @@
 import audio.AudioLine
 import frontend.Frontend
-import javax.sound.sampled.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.coroutineScope
 import synthesizer.IntervalGenerator
 import synthesizer.ToneGenerator
+import javax.sound.sampled.*
+import synthesizer.Waveform
 
 public const val sampleRate: Int = 44100
 public const val bitDepth: Int = 16
 public val audioFormat: AudioFormat = AudioFormat(sampleRate.toFloat(), 16, 1, true, true)
 
-public enum class Waveform {
-    SINE,
-    SAWTOOTH,
-    SQUARE,
-    TRIANGLE
-}
+
 
 suspend fun main(): Unit = coroutineScope {
     println("Kotlin Synth v0.1")
@@ -25,7 +20,9 @@ suspend fun main(): Unit = coroutineScope {
         frontend.buildUI()
     }
 
-    launch { play() }
+    launch {
+        play()
+    }
 }
 
 suspend fun play() = coroutineScope {
@@ -69,7 +66,7 @@ suspend fun play() = coroutineScope {
 
     // a minor triad
     val someInterval: ByteArray =
-            intervalGenerator.generateInterval(30.0, 110.0, 261.63, 629.25, 1000, Waveform.SINE)
+        intervalGenerator.generateInterval(30.0, 110.0, 261.63, 629.25, 1000, Waveform.SINE)
 
     audioOut.write(someInterval, 0, someInterval.size)
 
