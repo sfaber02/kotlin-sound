@@ -15,10 +15,10 @@ public val audioFormat: AudioFormat = AudioFormat(sampleRate.toFloat(), 16, 1, t
 suspend fun main(): Unit = coroutineScope {
     println("Kotlin Synth v0.1")
 
-    launch {
-        val frontend: Frontend = Frontend()
-        frontend.buildUI()
-    }
+//    launch {
+//        val frontend: Frontend = Frontend()
+//        frontend.buildUI()
+//    }
 
     launch {
         play()
