@@ -9,7 +9,7 @@ import synthesizer.Waveform
 public const val sampleRate: Int = 44100
 public const val bitDepth: Int = 16
 public val audioFormat: AudioFormat = AudioFormat(sampleRate.toFloat(), 16, 1, true, true)
-
+public val audioOut: SourceDataLine = AudioLine().getLine()
 
 
 suspend fun main(): Unit = coroutineScope {
@@ -21,12 +21,17 @@ suspend fun main(): Unit = coroutineScope {
 //    }
 
     launch {
-        play()
+        playBufferedTone()
+
+        // this plays a sequencer melody and then a chord
+//        play()
     }
+
+
 }
 
 suspend fun play() = coroutineScope {
-    val audioOut = AudioLine().getLine()
+//    val audioOut = AudioLine().getLine()
 
     val toneGenerator: ToneGenerator = ToneGenerator()
 
@@ -80,6 +85,14 @@ suspend fun play() = coroutineScope {
     audioOut.stop()
     audioOut.close()
 }
+
+suspend fun playBufferedTone() {
+    val toneGenerator = ToneGenerator()
+
+    toneGenerator.generateBufferedTone(440.0, 1000, Waveform.SINE, audioOut)
+}
+
+
 
 // Play an audio file
 //    val player: AudioFilePlayer = AudioFilePlayer()

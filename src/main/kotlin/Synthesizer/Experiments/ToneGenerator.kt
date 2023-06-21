@@ -1,10 +1,16 @@
 package synthesizer
 
+import audioFormat
 import sampleRate
+import javax.sound.sampled.SourceDataLine
+import java.time.Instant
+
 
 // Generates a ByteArray of audio samples
 class ToneGenerator {
 
+
+    // generates a tone of a set length
     public fun generateTone(
         duration: Double,
         frequency: Double,
@@ -35,6 +41,7 @@ class ToneGenerator {
         return buffer
     }
 
+    // this doesn't work yet, the intention here is to generate a rising / falling tone
     public fun generateToneWithOffset(
         duration: Double,
         frequency: Double,
@@ -53,6 +60,36 @@ class ToneGenerator {
         return getSamples(oscillator, amplitude, buffer)
     }
 
+    fun generateBufferedTone(frequency: Double, amplitude: Int, waveform: Waveform, audioOut: SourceDataLine) {
+        print ("generate buffer tone")
+        val buffer: AudioBuffer = AudioBuffer(1000)
+        val oscillator: Oscillator = Oscillator(sampleRate, waveform, frequency)
+        var init: Int = 0
+
+        audioOut.open(audioFormat)
+        audioOut.start()
+
+        print ("$buffer, $oscillator, $audioOut")
+
+
+        // out put for 5 seconds
+        val start = Instant.now()
+        while (start.epochSecond + 10 > Instant.now().epochSecond) {
+            val rawSample: Double = oscillator.getSample()
+            buffer.writeToBuffer((rawSample * amplitude).toInt())
+            if (init < 1000) {
+                // fill the buffer before we play it
+                init++
+                audioOut.write(buffer.getBuffer(), 0, 1000)
+            } else {
+//                print("fkfdkf")
+                audioOut.write(buffer.getBuffer(), 0, 1000)
+                audioOut.flush()
+//                print(buffer.getBuffer())
+            }
+        }
+    }
+
     private fun getSamples(oscillator: ExperimentalOscillator, amplitude: Int, buffer: ByteArray): ByteArray {
         for (i in buffer.indices step 2) {
             val rawSample: Double = oscillator.getSample()
@@ -68,4 +105,7 @@ class ToneGenerator {
 
         return buffer
     }
+
+
+
 }
