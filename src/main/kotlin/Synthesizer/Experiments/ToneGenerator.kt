@@ -11,7 +11,7 @@ class ToneGenerator {
 
 
     // generates a tone of a set length
-    public fun generateTone(
+    fun generateTone(
         duration: Double,
         frequency: Double,
         amplitude: Int,
@@ -42,7 +42,7 @@ class ToneGenerator {
     }
 
     // this doesn't work yet, the intention here is to generate a rising / falling tone
-    public fun generateToneWithOffset(
+    fun generateToneWithOffset(
         duration: Double,
         frequency: Double,
         amplitude: Int,
@@ -62,7 +62,9 @@ class ToneGenerator {
 
     fun generateBufferedTone(frequency: Double, amplitude: Int, waveform: Waveform, audioOut: SourceDataLine) {
         print ("generate buffer tone")
-        val buffer: AudioBuffer = AudioBuffer(1000)
+        val bufferLength: Int = 2000
+        val playTimeInSeconds: Int = 60
+        val buffer: AudioBuffer = AudioBuffer(bufferLength)
         val oscillator: Oscillator = Oscillator(sampleRate, waveform, frequency)
         var init: Int = 0
 
@@ -74,16 +76,16 @@ class ToneGenerator {
 
         // out put for 5 seconds
         val start = Instant.now()
-        while (start.epochSecond + 10 > Instant.now().epochSecond) {
+        while (start.epochSecond + playTimeInSeconds > Instant.now().epochSecond) {
             val rawSample: Double = oscillator.getSample()
             buffer.writeToBuffer((rawSample * amplitude).toInt())
-            if (init < 1000) {
+            if (init < bufferLength) {
                 // fill the buffer before we play it
                 init++
-                audioOut.write(buffer.getBuffer(), 0, 1000)
+                audioOut.write(buffer.getBuffer(), 0, bufferLength)
             } else {
 //                print("fkfdkf")
-                audioOut.write(buffer.getBuffer(), 0, 1000)
+                audioOut.write(buffer.getBuffer(), 0, bufferLength)
                 audioOut.flush()
 //                print(buffer.getBuffer())
             }

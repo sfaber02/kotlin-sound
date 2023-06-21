@@ -15,10 +15,10 @@ public val audioOut: SourceDataLine = AudioLine().getLine()
 suspend fun main(): Unit = coroutineScope {
     println("Kotlin Synth v0.1")
 
-//    launch {
-//        val frontend: Frontend = Frontend()
-//        frontend.buildUI()
-//    }
+    launch {
+        val frontend: Frontend = Frontend()
+        frontend.buildUI()
+    }
 
     launch {
         playBufferedTone()
